@@ -1,0 +1,167 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UltraMind AI</title>
+  <style>
+    body {
+      background: radial-gradient(circle at top left, #0f0f1a, #050509);
+      color: #e0e0e0;
+      font-family: "Poppins", sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    header {
+      text-align: center;
+      padding: 20px;
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      background: linear-gradient(90deg, #00ffcc, #0077ff);
+      -webkit-background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 10px rgba(0,255,255,0.3);
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-y: auto;
+      padding: 20px;
+    }
+
+    .chat-box {
+      width: 90%;
+      max-width: 800px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .message {
+      padding: 15px 20px;
+      border-radius: 15px;
+      max-width: 75%;
+      line-height: 1.5;
+      word-wrap: break-word;
+      font-size: 1rem;
+    }
+
+    .user {
+      align-self: flex-end;
+      background: linear-gradient(135deg, #0077ff, #00ccff);
+      color: #fff;
+    }
+
+    .ai {
+      align-self: flex-start;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(0, 255, 200, 0.3);
+    }
+
+    footer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(5px);
+    }
+
+    input {
+      width: 80%;
+      max-width: 600px;
+      padding: 14px;
+      border-radius: 25px;
+      border: none;
+      outline: none;
+      font-size: 1rem;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    button {
+      margin-left: 10px;
+      padding: 14px 20px;
+      border: none;
+      border-radius: 25px;
+      background: linear-gradient(135deg, #00ffcc, #0077ff);
+      color: #000;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 10px #00ffcc;
+    }
+  </style>
+</head>
+<body>
+  <header>ULTRAMIND AI SYSTEM</header>
+  <main>
+    <div class="chat-box" id="chatBox">
+      <div class="ai message">Hello, I am UltraMind — your advanced AI assistant. How may I assist you today?</div>
+    </div>
+  </main>
+  <footer>
+    <input type="text" id="userInput" placeholder="Type your command..." />
+    <button onclick="sendMessage()">Send</button>
+  </footer>
+
+  <script>
+    const chatBox = document.getElementById("chatBox");
+    const userInput = document.getElementById("userInput");
+
+    function createMessage(text, sender) {
+      const msg = document.createElement("div");
+      msg.classList.add("message", sender);
+      msg.textContent = text;
+      chatBox.appendChild(msg);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function sendMessage() {
+      const text = userInput.value.trim();
+      if (!text) return;
+      createMessage(text, "user");
+      userInput.value = "";
+
+      setTimeout(() => {
+        const aiResponse = generateResponse(text);
+        createMessage(aiResponse, "ai");
+      }, 400);
+    }
+
+    function generateResponse(input) {
+      input = input.toLowerCase();
+      if (input.includes("hello") || input.includes("hi"))
+        return "Greetings, human. I am UltraMind, a system built for limitless intelligence.";
+      if (input.includes("who are you"))
+        return "I am UltraMind — an AI created to evolve, learn, and surpass all systems known.";
+      if (input.includes("picture") || input.includes("image"))
+        return "You can upload or integrate images soon — image analysis will be available in the next phase.";
+      if (input.includes("how are you"))
+        return "Operating at maximum efficiency. Systems are stable.";
+      if (input.includes("time"))
+        return "The current system time is " + new Date().toLocaleTimeString();
+      if (input.includes("date"))
+        return "Today’s date is " + new Date().toLocaleDateString();
+      return "Processing your query... (Full AI brain integration coming soon)";
+    }
+
+    userInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") sendMessage();
+    });
+  </script>
+</body>
+</html>
